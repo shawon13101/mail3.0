@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storage</title>
+<style>
+    .menu {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        button {
+            width: 150px;
+            height: 70px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { 
+            opacity: 0.9; 
+        }
+        .Regin { 
+            background: #00FF9C; 
+            color: white; 
+        }
+
+        .Fresh { 
+            background: #799EFF; 
+            color: white; 
+        }
+        .Tkn-1 { 
+            background: #4DFFBE; 
+            
+        }
+        .Picmic { 
+            background: #B1AFFF; 
+            color: white; 
+        }
+        .Thana-2 { 
+            background: #A8F1FF; 
+            color: white; 
+        }
+        .Stearic { 
+            background: #94FFD8; 
+            color: white; 
+        }
+        .Kizar { 
+            background: #C68EFD; 
+            color: white; 
+        }
+        .Moom { 
+            background: #A1E3F9; 
+            color: white; 
+        }
+        .Baluchor { 
+            background: #A6F1E0; 
+            color: white; 
+        }
+        .Kn-500 { 
+            background: #D1F8EF; 
+            color: white; 
+        }
+        .Titi { 
+            background: #C4D9FF; 
+            color: white; 
+        }
+        .ACR { 
+            background: #B1F0F7; 
+            color: white; 
+        }
+        .CPE { 
+            background: #A1EEBD; 
+            color: white; 
+        }
+        .Turoushko { 
+            background: #D4F6FF; 
+            color: white; }
+
+        .Hurstalec { 
+            background: #4CC9FE; 
+            color: white; 
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+         .Tkn-1 a{
+            color: black;
+         }
+         .Thana-2 a{
+            color: black;
+         }
+        </style>
+</head>
+<body>
+     <div class="menu">
+        <button class="Regin" onclick="showForm('Regin')"><a href="https://docs.google.com/spreadsheets/d/1oE1Q3F09IxtI5TmetPzW1qs10jCOl00Ys9oBbqjmuhU/edit?usp=sharing">Regin</a></button>
+
+        <button class="Fresh" onclick="showForm('Fresh')"><a href="https://docs.google.com/spreadsheets/d/1aR0UUhKWDhwRpca4W1Rfp_w5dRCQp-yX9M1tWbcQULo/edit?usp=sharing">Fresh</a></button>
+
+        <button class="Tkn-1" onclick="showForm('Tkn-1')"><a href="https://docs.google.com/spreadsheets/d/1dDYlWtrpFGayYw8sHg_blcnv7T_ABUsMp8HnRdeNn28/edit?usp=sharing">Tkn-1</a></button>
+        
+
+        <button class="Picmic" onclick="showForm('Picmic')"><a href="https://docs.google.com/spreadsheets/d/1JrL7FPt4qXOw7zDocCsyoMkmCLwnHq-46WcdnyBlLdY/edit?usp=sharing">Picmic</a></button>
+
+        <button class="Thana-2" onclick="showForm('Thana-2')"><a href="https://docs.google.com/spreadsheets/d/1l4rGXEAojovPex4ozQzdm-dclKYSwahpUHDiUwmxaJI/edit?usp=sharing">Thana-2</a></button>
+
+        <button class="Stearic" onclick="showForm('Stearic')"><a href="https://docs.google.com/spreadsheets/d/1-Y2syxpzmEV085SWdfbaN9EtXVJHd3nIUrJ7cCTVlME/edit?usp=sharing">Stearic</a></button>
+
+        <button class="Kizar" onclick="showForm('Kizar')"><a href="https://docs.google.com/spreadsheets/d/1z7u2mW_YnJPMWt5YNce9DBn93GdotQwoL6LVNl9qxwA/edit?usp=sharing">Kizar</a></button>
+
+        <button class="Moom" onclick="showForm('Moom')"><a href="https://docs.google.com/spreadsheets/d/13G3wjxrhV9YaZGXeSMSDAFedJmiupeICvfEZ-VUz-Ic/edit?usp=sharing">Moom</a></button>
+
+        <button class="Baluchor" onclick="showForm('Baluchor')"><a href="https://docs.google.com/spreadsheets/d/19q45xhCB0LGBytM7aArWFVGKZA63q-JtL-_5GTWA-V4/edit?usp=sharing">Baluchor</a></button>
+
+        <button class="Kn-500" onclick="showForm('Kn-500')"><a href="https://docs.google.com/spreadsheets/d/1ulWGguWO4oZzB8cTMcQjKuG8Q9vvAXzbN-PuDBMXI-Y/edit?usp=sharing">Kn-500</a></button>
+
+        <button class="Titi" onclick="showForm('Titi')"><a href="https://docs.google.com/spreadsheets/d/1uYjMwzReCTirinTp8HoBWkcphO64ei3FrbXXC50Aj0A/edit?usp=sharing">Titi</a></button>
+
+        <button class="ACR" onclick="showForm('ACR')"><a href="https://docs.google.com/spreadsheets/d/1tIYK3w8lukPKXwvzEDl-RhCfyTQCUXP4n9glQlKkpNk/edit?usp=sharing">ACR</a></button>
+
+        <button class="CPE" onclick="showForm('CPE')"><a href="https://docs.google.com/spreadsheets/d/1UgWKvIvQQDbqhWU2Rx5iiZX6hJhx4JCnG1kRCb9XgaM/edit?usp=sharing">CPE</a></button>
+
+        <button class="Turoushko" onclick="showForm('Turoushko')"><a href="https://docs.google.com/spreadsheets/d/1nxqeWM-zwI6CSoYpNeeK_unr1RDPv6fUxyfuYa2tkDA/edit?usp=sharing">Turoushko</a></button>
+
+        <button class="Hurstalec" onclick="showForm('Hurstalec')"><a href="https://docs.google.com/spreadsheets/d/1YpitT_NaxAZ95InV_CIObEJhqy2De_LSM5hmArBKN_I/edit?usp=sharing">Hurstalec</a></button>
+
+       
+
+        
+        
+
+    </div>
+</body>
+</html>
