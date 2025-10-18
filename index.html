@@ -122,70 +122,61 @@
   </div>
 
   <script>
-    // === CHANGE THIS TO YOUR DEPLOYED SCRIPT URL ===
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbweJexbsbdPMQ3eidl5n9PEvEA4MPFreydIDA9yL_JTX6okITRMTecqGFNCDe4topYr/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVzaY11cR3KVw_DxzQAXjuyCjSM19DX5uhra_EBIkU9uNiVI1A6kbdmxCwWwyqxG3n4g/exec"; // Replace with Apps Script URL
 
-    // Prefill today's date
-    document.addEventListener('DOMContentLoaded', () => {
-      const today = new Date().toISOString().split('T')[0];
-      if (!document.getElementById('buyDate').value) document.getElementById('buyDate').value = today;
-      if (!document.getElementById('sellDate').value) document.getElementById('sellDate').value = today;
+  // Handle Purchase
+  document.getElementById("purchaseForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const data = {
+      type: "Purchase",
+      product: document.getElementById("purchaseItem").value,
+      quantity: document.getElementById("purchaseQty").value,
+      date: document.getElementById("purchaseDate").value
+    };
+
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(res => {
+      if(res.status === "success"){
+        alert("✅ Purchase saved! You’ll also get an email.");
+        document.getElementById("purchaseForm").reset();
+      } else {
+        alert("❌ Error: " + res.message);
+      }
     });
+  });
 
-    function showForm(formType) {
-      document.querySelectorAll('.form-container').forEach(form => form.style.display = 'none');
-      if (formType === 'buy') document.getElementById('buyForm').style.display = 'block';
-      else if (formType === 'sell') document.getElementById('sellForm').style.display = 'block';
-    }
+  // Handle Sell
+  document.getElementById("sellForm").addEventListener("submit", function(e){
+    e.preventDefault();
 
-    function showMessage(elementId, message, isSuccess) {
-      const el = document.getElementById(elementId);
-      el.textContent = message;
-      el.className = isSuccess ? 'message success' : 'message error';
-      el.style.display = 'block';
-      setTimeout(() => { el.style.display = 'none'; }, 4000);
-    }
+    const data = {
+      type: "Sell",
+      product: document.getElementById("sellItem").value,
+      quantity: document.getElementById("sellQty").value,
+      date: document.getElementById("sellDate").value
+    };
 
-    function sendViaAppsScript(data) {
-      return fetch(SCRIPT_URL, {
-        method: 'POST',
-        body: new URLSearchParams(data)
-      });
-    }
-
-    function saveBuy() {
-      const data = {
-        type: "buy",
-        product: document.getElementById('buyProduct').value,
-        date: document.getElementById('buyDate').value,
-        from: document.getElementById('buyFrom').value.trim(),
-        qty: document.getElementById('buyQuantity').value
-      };
-      if (!data.product || !data.date || !data.from || !data.qty) {
-        showMessage('buyMessage', "Please fill all fields!", false);
-        return;
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(res => {
+      if(res.status === "success"){
+        alert("✅ Sale saved! You’ll also get an email.");
+        document.getElementById("sellForm").reset();
+      } else {
+        alert("❌ Error: " + res.message);
       }
-      sendViaAppsScript(data)
-        .then(() => showMessage('buyMessage', "Purchase saved!", true))
-        .catch(() => showMessage('buyMessage', "Error saving purchase.", false));
-    }
+    });
+  });
+</script>
 
-    function saveSell() {
-      const data = {
-        type: "sell",
-        product: document.getElementById('sellProduct').value,
-        date: document.getElementById('sellDate').value,
-        bill: document.getElementById('billNumber').value.trim(),
-        qty: document.getElementById('sellQuantity').value
-      };
-      if (!data.product || !data.date || !data.bill || !data.qty) {
-        showMessage('sellMessage', "Please fill all fields!", false);
-        return;
-      }
-      sendViaAppsScript(data)
-        .then(() => showMessage('sellMessage', "Sale saved!", true))
-        .catch(() => showMessage('sellMessage', "Error saving sale.", false));
-    }
-  </script>
 </body>
 </html>
+
