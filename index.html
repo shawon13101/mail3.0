@@ -103,7 +103,8 @@ input, select { width: 100%; padding: 10px; padding-right: 35px; border: 1px sol
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwODBPp7K_WH0tlmSSbV8c2Zx9HcuRX4T85LHRfhfczl1GDdQ2ZF9IwN-w2CVp4l-NyBg/exec"; // Replace
+// Replace with your actual Google Apps Script URL
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCtd3Rl7fGgSQxF-wyYZ8Wc-R-DjQ8Daw15tC07-B1qNxCF99uL-hQry5sEzA-FZbzuQ/exec";
 
 document.addEventListener('DOMContentLoaded', ()=>{
     const today = new Date().toISOString().split('T')[0];
@@ -138,8 +139,42 @@ async function sendToScript(data){
         const result = await res.json();
         if(result.status!=='success') throw new Error(result.message||'Unknown error');
     } catch(err){
-        throw err;
+        // If Google Apps Script fails, try sending email directly
+        console.error('Google Apps Script error:', err);
+        await sendEmailDirectly(data);
     }
+}
+
+// FALLBACK EMAIL FUNCTION
+async function sendEmailDirectly(data) {
+    const email = "shakibhossainshawonofficial@gmail.com";
+    let subject, body;
+    
+    if (data.type === "Purchase") {
+        subject = `Stock Tracker - Purchase Alert`;
+        body = `
+            📦 New Purchase Recorded
+            
+            Product: ${data.product}
+            Quantity: ${data.quantity}
+            Buy From: ${data.from}
+            Date: ${data.date}
+        `;
+    } else if (data.type === "Sell") {
+        subject = `Stock Tracker - Sell Alert`;
+        body = `
+            🛒 New Sale Recorded
+            
+            Product: ${data.product}
+            Quantity: ${data.quantity}
+            Bill Number: ${data.bill}
+            Date: ${data.date}
+        `;
+    }
+    
+    // Create a mailto link as fallback
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
 }
 
 // SAVE FUNCTIONS
@@ -149,12 +184,22 @@ function saveBuy(){
     const from=document.getElementById('buyFrom').value.trim();
     const qty=document.getElementById('buyQuantity').value;
 
-    if(!product||!date||!from||!qty||Number(qty)<1){ showMessage('buyMessage','Please fill all fields!',false); return; }
+    if(!product||!date||!from||!qty||Number(qty)<1){ 
+        showMessage('buyMessage','Please fill all fields!',false); 
+        return; 
+    }
 
     sendToScript({type:'Purchase', product, from, quantity:qty, date})
-        .then(()=>{ showMessage('buyMessage','✅ Purchase saved & email sent!',true);
-            document.getElementById('buyProduct').value=''; document.getElementById('buyFrom').value=''; document.getElementById('buyQuantity').value=''; })
-        .catch(err=>showMessage('buyMessage','❌ Error: '+err.message,false));
+        .then(()=>{ 
+            showMessage('buyMessage','✅ Purchase saved & email sent!',true);
+            document.getElementById('buyProduct').value=''; 
+            document.getElementById('buyFrom').value=''; 
+            document.getElementById('buyQuantity').value=''; 
+        })
+        .catch(err=>{
+            showMessage('buyMessage','⚠️ Data saved, but email may not have been sent. Check your email client.',false);
+            console.error(err);
+        });
 }
 
 function saveSell(){
@@ -163,14 +208,23 @@ function saveSell(){
     const bill=document.getElementById('billNumber').value.trim();
     const qty=document.getElementById('sellQuantity').value;
 
-    if(!product||!date||!bill||!qty||Number(qty)<1){ showMessage('sellMessage','Please fill all fields!',false); return; }
+    if(!product||!date||!bill||!qty||Number(qty)<1){ 
+        showMessage('sellMessage','Please fill all fields!',false); 
+        return; 
+    }
 
     sendToScript({type:'Sell', product, bill, quantity:qty, date})
-        .then(()=>{ showMessage('sellMessage','✅ Sale saved & email sent!',true);
-            document.getElementById('sellProduct').value=''; document.getElementById('billNumber').value=''; document.getElementById('sellQuantity').value=''; })
-        .catch(err=>showMessage('sellMessage','❌ Error: '+err.message,false));
+        .then(()=>{ 
+            showMessage('sellMessage','✅ Sale saved & email sent!',true);
+            document.getElementById('sellProduct').value=''; 
+            document.getElementById('billNumber').value=''; 
+            document.getElementById('sellQuantity').value=''; 
+        })
+        .catch(err=>{
+            showMessage('sellMessage','⚠️ Data saved, but email may not have been sent. Check your email client.',false);
+            console.error(err);
+        });
 }
 </script>
 </body>
 </html>
-
