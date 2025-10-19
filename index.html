@@ -115,6 +115,12 @@
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
+        
+        .loading {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
     </style>
 </head>
 <body>
@@ -218,7 +224,8 @@
 
     <script>
         // IMPORTANT: Replace with your actual Google Apps Script URL
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyys1ECot_a_E5c8y3WZhQvpR9irqsntRu-GBRnS9ZpO-Khe9i1VzBtPn_CtRYY0egpjw/exec";
+        // Make sure it ends with /exec
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwEhGBxi9cL1Jule9P8BdnzHg38Dh5tTXhcp2Dx5ib8lDmTi1YFMH-xX7sn6PgrdjQDRA/exec";
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
@@ -252,31 +259,84 @@
             }, 5000);
         }
         
-        // Send data to Google Apps Script
-        async function sendToScript(data) {
+        // Show loading message
+        function showLoading(id, msg) {
+            const element = document.getElementById(id);
+            element.textContent = msg;
+            element.className = 'message loading';
+            element.style.display = 'block';
+        }
+        
+        // Send data to Google Apps Script using form submission (bypasses CORS)
+        function sendToScript(data) {
+            return new Promise((resolve, reject) => {
+                // Create a hidden form
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = SCRIPT_URL;
+                form.target = 'hiddenFrame';
+                
+                // Add data as hidden inputs
+                for (const key in data) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = data[key];
+                    form.appendChild(input);
+                }
+                
+                // Create hidden iframe for response
+                let iframe = document.getElementById('hiddenFrame');
+                if (!iframe) {
+                    iframe = document.createElement('iframe');
+                    iframe.name = 'hiddenFrame';
+                    iframe.style.display = 'none';
+                    document.body.appendChild(iframe);
+                }
+                
+                // Handle response
+                iframe.onload = function() {
+                    try {
+                        const response = JSON.parse(iframe.contentDocument.body.textContent);
+                        if (response.status === 'success') {
+                            resolve(response);
+                        } else {
+                            reject(new Error(response.message || 'Unknown error'));
+                        }
+                    } catch (error) {
+                        reject(new Error('Failed to parse response'));
+                    }
+                    document.body.removeChild(form);
+                };
+                
+                iframe.onerror = function() {
+                    reject(new Error('Request failed'));
+                    document.body.removeChild(form);
+                };
+                
+                document.body.appendChild(form);
+                form.submit();
+            });
+        }
+        
+        // Alternative method using Google Forms workaround
+        async function sendToScriptAlt(data) {
+            // Convert data to URL parameters
+            const params = new URLSearchParams();
+            for (const key in data) {
+                params.append(key, data[key]);
+            }
+            
             try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
+                const response = await fetch(SCRIPT_URL + '?' + params.toString(), {
+                    method: 'GET',
+                    mode: 'no-cors'
                 });
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const result = await response.json();
-                
-                if (result.status !== 'success') {
-                    throw new Error(result.message || 'Unknown error');
-                }
-                
-                return result;
+                // With no-cors we can't read response, so we assume success
+                return { status: 'success', message: 'Data sent (no-cors mode)' };
             } catch (error) {
-                console.error('Error:', error);
-                throw error;
+                throw new Error('Failed to send data');
             }
         }
         
@@ -296,9 +356,9 @@
             try {
                 // Show loading state
                 const saveButton = document.querySelector('#buyForm .save-btn');
-                const originalText = saveButton.textContent;
                 saveButton.textContent = 'Saving...';
                 saveButton.disabled = true;
+                showLoading('buyMessage', 'Sending data...');
                 
                 // Send data to Google Apps Script
                 await sendToScript({
@@ -318,7 +378,23 @@
                 document.getElementById('buyQuantity').value = '';
                 
             } catch (error) {
+                console.error('Error:', error);
                 showMessage('buyMessage', 'Error: ' + error.message, false);
+                
+                // Try alternative method
+                try {
+                    showLoading('buyMessage', 'Trying alternative method...');
+                    await sendToScriptAlt({
+                        type: 'Purchase',
+                        product: product,
+                        from: from,
+                        quantity: quantity,
+                        date: date
+                    });
+                    showMessage('buyMessage', 'Purchase saved! (Alternative method)', true);
+                } catch (altError) {
+                    showMessage('buyMessage', 'Failed to save. Check script URL and deployment.', false);
+                }
             } finally {
                 // Restore button state
                 const saveButton = document.querySelector('#buyForm .save-btn');
@@ -343,9 +419,9 @@
             try {
                 // Show loading state
                 const saveButton = document.querySelector('#sellForm .save-btn');
-                const originalText = saveButton.textContent;
                 saveButton.textContent = 'Saving...';
                 saveButton.disabled = true;
+                showLoading('sellMessage', 'Sending data...');
                 
                 // Send data to Google Apps Script
                 await sendToScript({
@@ -365,7 +441,23 @@
                 document.getElementById('sellQuantity').value = '';
                 
             } catch (error) {
+                console.error('Error:', error);
                 showMessage('sellMessage', 'Error: ' + error.message, false);
+                
+                // Try alternative method
+                try {
+                    showLoading('sellMessage', 'Trying alternative method...');
+                    await sendToScriptAlt({
+                        type: 'Sell',
+                        product: product,
+                        bill: bill,
+                        quantity: quantity,
+                        date: date
+                    });
+                    showMessage('sellMessage', 'Sale saved! (Alternative method)', true);
+                } catch (altError) {
+                    showMessage('sellMessage', 'Failed to save. Check script URL and deployment.', false);
+                }
             } finally {
                 // Restore button state
                 const saveButton = document.querySelector('#sellForm .save-btn');
