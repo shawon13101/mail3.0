@@ -10,11 +10,20 @@
             max-width: 500px;
             margin: 0 auto;
             padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         h1 {
             text-align: center;
             color: #333;
+            margin-bottom: 30px;
         }
         
         .menu {
@@ -25,11 +34,12 @@
         }
         
         button {
-            padding: 10px 15px;
+            padding: 12px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
+            font-weight: bold;
         }
         
         .buy-btn {
@@ -48,10 +58,11 @@
         }
         
         .form-container {
-            border: 1px solid #ddd;
             padding: 20px;
             margin: 10px 0;
             display: none;
+            border: 1px solid #ddd;
+            border-radius: 8px;
         }
         
         .form-group {
@@ -62,46 +73,52 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
+            color: #333;
         }
         
         input, select {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            font-size: 16px;
         }
         
         .form-buttons {
             display: flex;
             gap: 10px;
-            margin-top: 15px;
+            margin-top: 20px;
         }
         
         .save-btn {
             background: #4CAF50;
             color: white;
-            padding: 10px;
+            padding: 12px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             flex: 1;
+            font-size: 16px;
         }
         
         .back-btn {
             background: #757575;
             color: white;
-            padding: 10px;
+            padding: 12px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             flex: 1;
+            font-size: 16px;
         }
         
         .message {
-            padding: 10px;
-            margin: 10px 0;
+            padding: 12px;
+            margin: 15px 0;
             border-radius: 4px;
             display: none;
+            text-align: center;
+            font-weight: bold;
         }
         
         .success {
@@ -124,108 +141,109 @@
     </style>
 </head>
 <body>
-    <h1>Stock Tracker</h1>
-    
-    <div class="menu">
-        <button class="buy-btn" onclick="showForm('buy')">Buy</button>
-        <button class="sell-btn" onclick="showForm('sell')">Sell</button>
-        <button class="view-btn"><a href="file.html" style="color:white; text-decoration:none;">View</a></button>
-    </div>
-    
-    <!-- Buy Form -->
-    <div id="buyForm" class="form-container">
-        <h2>Buy Product</h2>
-        <div class="form-group">
-            <label>Product:</label>
-            <select id="buyProduct">
-                <option value="">-- Select Product --</option>
-                <option value="Meghna Regin">Meghna Regin</option>
-                <option value="CGPC Regin">CGPC Regin</option>
-                <option value="Sg-5 Regin">Sg-5 Regin</option>
-                <option value="Fresh Calcium">Fresh Calcium</option>
-                <option value="Tkn-1">Tkn-1</option>
-                <option value="Picmic">Picmic</option>
-                <option value="Thana-2">Thana-2</option>
-                <option value="Stearic">Stearic</option>
-                <option value="Kizar">Kizar</option>
-                <option value="Moom">Moom</option>
-                <option value="Baluchor">Baluchor</option>
-                <option value="Kn-500">Kn-500</option>
-                <option value="Titi">Titi</option>
-                <option value="ACR">ACR</option>
-                <option value="CPE">CPE</option>
-                <option value="Turoushko">Turoushko</option>
-                <option value="Hurstalec">Hurstalec</option>
-            </select>
+    <div class="container">
+        <h1>Stock Tracker</h1>
+        
+        <div class="menu">
+            <button class="buy-btn" onclick="showForm('buy')">Buy</button>
+            <button class="sell-btn" onclick="showForm('sell')">Sell</button>
+            <button class="view-btn"><a href="file.html" style="color:white; text-decoration:none;">View</a></button>
         </div>
-        <div class="form-group">
-            <label>Date:</label>
-            <input type="date" id="buyDate">
+        
+        <!-- Buy Form -->
+        <div id="buyForm" class="form-container">
+            <h2 style="text-align:center; color:#333;">Buy Product</h2>
+            <div class="form-group">
+                <label>Product:</label>
+                <select id="buyProduct">
+                    <option value="">-- Select Product --</option>
+                    <option value="Meghna Regin">Meghna Regin</option>
+                    <option value="CGPC Regin">CGPC Regin</option>
+                    <option value="Sg-5 Regin">Sg-5 Regin</option>
+                    <option value="Fresh Calcium">Fresh Calcium</option>
+                    <option value="Tkn-1">Tkn-1</option>
+                    <option value="Picmic">Picmic</option>
+                    <option value="Thana-2">Thana-2</option>
+                    <option value="Stearic">Stearic</option>
+                    <option value="Kizar">Kizar</option>
+                    <option value="Moom">Moom</option>
+                    <option value="Baluchor">Baluchor</option>
+                    <option value="Kn-500">Kn-500</option>
+                    <option value="Titi">Titi</option>
+                    <option value="ACR">ACR</option>
+                    <option value="CPE">CPE</option>
+                    <option value="Turoushko">Turoushko</option>
+                    <option value="Hurstalec">Hurstalec</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Date:</label>
+                <input type="date" id="buyDate">
+            </div>
+            <div class="form-group">
+                <label>Buy From:</label>
+                <input type="text" id="buyFrom" placeholder="Shop/Person">
+            </div>
+            <div class="form-group">
+                <label>Quantity:</label>
+                <input type="number" id="buyQuantity" min="1" placeholder="Quantity">
+            </div>
+            <div class="form-buttons">
+                <button class="save-btn" onclick="saveBuy()">Save Purchase</button>
+                <button class="back-btn" onclick="showForm('home')">Back</button>
+            </div>
+            <div id="buyMessage" class="message"></div>
         </div>
-        <div class="form-group">
-            <label>Buy From:</label>
-            <input type="text" id="buyFrom" placeholder="Shop/Person">
+        
+        <!-- Sell Form -->
+        <div id="sellForm" class="form-container">
+            <h2 style="text-align:center; color:#333;">Sell Product</h2>
+            <div class="form-group">
+                <label>Product:</label>
+                <select id="sellProduct">
+                    <option value="">-- Select Product --</option>
+                    <option value="Meghna Regin">Meghna Regin</option>
+                    <option value="CGPC Regin">CGPC Regin</option>
+                    <option value="Sg-5 Regin">Sg-5 Regin</option>
+                    <option value="Fresh Calcium">Fresh Calcium</option>
+                    <option value="Tkn-1">Tkn-1</option>
+                    <option value="Picmic">Picmic</option>
+                    <option value="Thana-2">Thana-2</option>
+                    <option value="Stearic">Stearic</option>
+                    <option value="Kizar">Kizar</option>
+                    <option value="Moom">Moom</option>
+                    <option value="Baluchor">Baluchor</option>
+                    <option value="Kn-500">Kn-500</option>
+                    <option value="Titi">Titi</option>
+                    <option value="ACR">ACR</option>
+                    <option value="CPE">CPE</option>
+                    <option value="Turoushko">Turoushko</option>
+                    <option value="Hurstalec">Hurstalec</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Date:</label>
+                <input type="date" id="sellDate">
+            </div>
+            <div class="form-group">
+                <label>Bill Number:</label>
+                <input type="text" id="billNumber" placeholder="Bill number">
+            </div>
+            <div class="form-group">
+                <label>Quantity:</label>
+                <input type="number" id="sellQuantity" min="1" placeholder="Quantity">
+            </div>
+            <div class="form-buttons">
+                <button class="save-btn" onclick="saveSell()">Save Sale</button>
+                <button class="back-btn" onclick="showForm('home')">Back</button>
+            </div>
+            <div id="sellMessage" class="message"></div>
         </div>
-        <div class="form-group">
-            <label>Quantity:</label>
-            <input type="number" id="buyQuantity" min="1" placeholder="Quantity">
-        </div>
-        <div class="form-buttons">
-            <button class="save-btn" onclick="saveBuy()">Save</button>
-            <button class="back-btn" onclick="showForm('home')">Back</button>
-        </div>
-        <div id="buyMessage" class="message"></div>
-    </div>
-    
-    <!-- Sell Form -->
-    <div id="sellForm" class="form-container">
-        <h2>Sell Product</h2>
-        <div class="form-group">
-            <label>Product:</label>
-            <select id="sellProduct">
-                <option value="">-- Select Product --</option>
-                <option value="Meghna Regin">Meghna Regin</option>
-                <option value="CGPC Regin">CGPC Regin</option>
-                <option value="Sg-5 Regin">Sg-5 Regin</option>
-                <option value="Fresh Calcium">Fresh Calcium</option>
-                <option value="Tkn-1">Tkn-1</option>
-                <option value="Picmic">Picmic</option>
-                <option value="Thana-2">Thana-2</option>
-                <option value="Stearic">Stearic</option>
-                <option value="Kizar">Kizar</option>
-                <option value="Moom">Moom</option>
-                <option value="Baluchor">Baluchor</option>
-                <option value="Kn-500">Kn-500</option>
-                <option value="Titi">Titi</option>
-                <option value="ACR">ACR</option>
-                <option value="CPE">CPE</option>
-                <option value="Turoushko">Turoushko</option>
-                <option value="Hurstalec">Hurstalec</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Date:</label>
-            <input type="date" id="sellDate">
-        </div>
-        <div class="form-group">
-            <label>Bill Number:</label>
-            <input type="text" id="billNumber" placeholder="Bill number">
-        </div>
-        <div class="form-group">
-            <label>Quantity:</label>
-            <input type="number" id="sellQuantity" min="1" placeholder="Quantity">
-        </div>
-        <div class="form-buttons">
-            <button class="save-btn" onclick="saveSell()">Save</button>
-            <button class="back-btn" onclick="showForm('home')">Back</button>
-        </div>
-        <div id="sellMessage" class="message"></div>
     </div>
 
     <script>
-        // IMPORTANT: Replace with your actual Google Apps Script URL
-        // Make sure it ends with /exec
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwEhGBxi9cL1Jule9P8BdnzHg38Dh5tTXhcp2Dx5ib8lDmTi1YFMH-xX7sn6PgrdjQDRA/exec";
+        // IMPORTANT: Replace this with your actual Google Apps Script URL after deployment
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxfHMa-ihIIr8HblpmuKsi43W5BepKlNud34DWV8w0-5FLUaTIV-d8oegSI59NPkr-f/exec";
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
@@ -267,76 +285,45 @@
             element.style.display = 'block';
         }
         
-        // Send data to Google Apps Script using form submission (bypasses CORS)
-        function sendToScript(data) {
-            return new Promise((resolve, reject) => {
-                // Create a hidden form
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = SCRIPT_URL;
-                form.target = 'hiddenFrame';
-                
-                // Add data as hidden inputs
-                for (const key in data) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = key;
-                    input.value = data[key];
-                    form.appendChild(input);
-                }
-                
-                // Create hidden iframe for response
-                let iframe = document.getElementById('hiddenFrame');
-                if (!iframe) {
-                    iframe = document.createElement('iframe');
-                    iframe.name = 'hiddenFrame';
-                    iframe.style.display = 'none';
-                    document.body.appendChild(iframe);
-                }
-                
-                // Handle response
-                iframe.onload = function() {
-                    try {
-                        const response = JSON.parse(iframe.contentDocument.body.textContent);
-                        if (response.status === 'success') {
-                            resolve(response);
-                        } else {
-                            reject(new Error(response.message || 'Unknown error'));
-                        }
-                    } catch (error) {
-                        reject(new Error('Failed to parse response'));
-                    }
-                    document.body.removeChild(form);
-                };
-                
-                iframe.onerror = function() {
-                    reject(new Error('Request failed'));
-                    document.body.removeChild(form);
-                };
-                
-                document.body.appendChild(form);
-                form.submit();
-            });
-        }
-        
-        // Alternative method using Google Forms workaround
-        async function sendToScriptAlt(data) {
-            // Convert data to URL parameters
-            const params = new URLSearchParams();
-            for (const key in data) {
-                params.append(key, data[key]);
-            }
-            
+        // Send data to Google Apps Script using URL parameters (works with GitHub Pages)
+        async function sendToScript(data) {
             try {
-                const response = await fetch(SCRIPT_URL + '?' + params.toString(), {
+                console.log('Sending data:', data);
+                
+                // Convert data to URL parameters
+                const params = new URLSearchParams();
+                for (const key in data) {
+                    if (data[key]) {
+                        params.append(key, data[key]);
+                    }
+                }
+                
+                // Add timestamp to avoid caching
+                params.append('timestamp', new Date().getTime());
+                
+                const urlWithParams = SCRIPT_URL + '?' + params.toString();
+                console.log('Request URL:', urlWithParams);
+                
+                const response = await fetch(urlWithParams, {
                     method: 'GET',
-                    mode: 'no-cors'
+                    mode: 'cors'
                 });
                 
-                // With no-cors we can't read response, so we assume success
-                return { status: 'success', message: 'Data sent (no-cors mode)' };
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                console.log('Response:', result);
+                
+                if (result.status !== 'success') {
+                    throw new Error(result.message || 'Unknown error');
+                }
+                
+                return result;
             } catch (error) {
-                throw new Error('Failed to send data');
+                console.error('Fetch error:', error);
+                throw error;
             }
         }
         
@@ -358,7 +345,7 @@
                 const saveButton = document.querySelector('#buyForm .save-btn');
                 saveButton.textContent = 'Saving...';
                 saveButton.disabled = true;
-                showLoading('buyMessage', 'Sending data...');
+                showLoading('buyMessage', 'Saving purchase data...');
                 
                 // Send data to Google Apps Script
                 await sendToScript({
@@ -370,7 +357,7 @@
                 });
                 
                 // Success
-                showMessage('buyMessage', 'Purchase saved! Email sent.', true);
+                showMessage('buyMessage', '✅ Purchase saved successfully! Email sent.', true);
                 
                 // Reset form
                 document.getElementById('buyProduct').value = '';
@@ -378,27 +365,12 @@
                 document.getElementById('buyQuantity').value = '';
                 
             } catch (error) {
-                console.error('Error:', error);
-                showMessage('buyMessage', 'Error: ' + error.message, false);
-                
-                // Try alternative method
-                try {
-                    showLoading('buyMessage', 'Trying alternative method...');
-                    await sendToScriptAlt({
-                        type: 'Purchase',
-                        product: product,
-                        from: from,
-                        quantity: quantity,
-                        date: date
-                    });
-                    showMessage('buyMessage', 'Purchase saved! (Alternative method)', true);
-                } catch (altError) {
-                    showMessage('buyMessage', 'Failed to save. Check script URL and deployment.', false);
-                }
+                console.error('Error saving purchase:', error);
+                showMessage('buyMessage', '❌ Error: ' + error.message, false);
             } finally {
                 // Restore button state
                 const saveButton = document.querySelector('#buyForm .save-btn');
-                saveButton.textContent = 'Save';
+                saveButton.textContent = 'Save Purchase';
                 saveButton.disabled = false;
             }
         }
@@ -421,7 +393,7 @@
                 const saveButton = document.querySelector('#sellForm .save-btn');
                 saveButton.textContent = 'Saving...';
                 saveButton.disabled = true;
-                showLoading('sellMessage', 'Sending data...');
+                showLoading('sellMessage', 'Saving sale data...');
                 
                 // Send data to Google Apps Script
                 await sendToScript({
@@ -433,7 +405,7 @@
                 });
                 
                 // Success
-                showMessage('sellMessage', 'Sale saved! Email sent.', true);
+                showMessage('sellMessage', '✅ Sale saved successfully! Email sent.', true);
                 
                 // Reset form
                 document.getElementById('sellProduct').value = '';
@@ -441,27 +413,12 @@
                 document.getElementById('sellQuantity').value = '';
                 
             } catch (error) {
-                console.error('Error:', error);
-                showMessage('sellMessage', 'Error: ' + error.message, false);
-                
-                // Try alternative method
-                try {
-                    showLoading('sellMessage', 'Trying alternative method...');
-                    await sendToScriptAlt({
-                        type: 'Sell',
-                        product: product,
-                        bill: bill,
-                        quantity: quantity,
-                        date: date
-                    });
-                    showMessage('sellMessage', 'Sale saved! (Alternative method)', true);
-                } catch (altError) {
-                    showMessage('sellMessage', 'Failed to save. Check script URL and deployment.', false);
-                }
+                console.error('Error saving sale:', error);
+                showMessage('sellMessage', '❌ Error: ' + error.message, false);
             } finally {
                 // Restore button state
                 const saveButton = document.querySelector('#sellForm .save-btn');
-                saveButton.textContent = 'Save';
+                saveButton.textContent = 'Save Sale';
                 saveButton.disabled = false;
             }
         }
